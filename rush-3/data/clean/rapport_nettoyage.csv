@@ -1,0 +1,53 @@
+﻿controle,valeur,detail
+Lignes initiales,103904,
+Colonnes initiales,25,
+Colonne supprimée,Unnamed: 0,Index séquentiel sans valeur métier.
+Textes,Contrôlés,Espaces superflus supprimés ; chaînes vides converties en NA.
+Doublons exacts avant suppression,0,
+Lignes supprimées pour doublon,0,
+Identifiants id dupliqués,0,Contrôle uniquement ; aucune ligne supprimée sur ce critère.
+Notes hors intervalle : Inflight wifi service,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Departure/Arrival time convenient,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Ease of Online booking,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Gate location,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Food and drink,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Online boarding,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Seat comfort,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Inflight entertainment,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : On-board service,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Leg room service,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Baggage handling,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Checkin service,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Inflight service,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Notes hors intervalle : Cleanliness,0,Valeurs attendues entre 0 et 5. Le zéro est valide.
+Âges hors intervalle 0-120,0,
+Distances inférieures ou égales à zéro,0,
+Retards négatifs : Departure Delay in Minutes,0,
+Retards négatifs : Arrival Delay in Minutes,0,
+Valeurs manquantes : id,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Gender,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Customer Type,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Age,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Type of Travel,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Class,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Flight Distance,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Inflight wifi service,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Departure/Arrival time convenient,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Ease of Online booking,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Gate location,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Food and drink,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Online boarding,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Seat comfort,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Inflight entertainment,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : On-board service,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Leg room service,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Baggage handling,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Checkin service,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Inflight service,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Cleanliness,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Departure Delay in Minutes,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : Arrival Delay in Minutes,310,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Valeurs manquantes : satisfaction,0,Conservées si elles ne peuvent pas être corrigées sans inventer une information.
+Lignes finales,103904,
+Colonnes finales,24,
+Fichier produit,rush-3\data\clean\train_clean.csv,
