@@ -25,3 +25,13 @@ EXCLUDED = {
 }
 
 LANDING_FEATURES = NUMERIC_FEATURES + CATEGORICAL_FEATURES
+
+
+# --- Modèle retenu (à confirmer en synchro 2) ---
+# Gradient boosting sans le type de voyage : motif du voyage pas connu
+# de façon fiable à l'atterrissage pour des passagers non répondants.
+MODEL_CATEGORICAL_FEATURES = [c for c in CATEGORICAL_FEATURES if c != "Type of Travel"]
+MODEL_FEATURES = NUMERIC_FEATURES + MODEL_CATEGORICAL_FEATURES
+
+# Les mineurs ne sont jamais signalés aux équipes (protection des données).
+AGE_MINIMUM_SIGNALEMENT = 18
