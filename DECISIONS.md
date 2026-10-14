@@ -23,7 +23,7 @@ Chaque choix de traitement des données ou de modélisation est noté ici avec s
 
 Tous les chiffres viennent de `notebooks/02_modeles.ipynb` (validation croisée à 5 plis sur train, `random_state=42`), exprimés en gain net pour 1 000 passagers arrivants. Gain maximal possible (n'aborder que des insatisfaits) : 6 000 €.
 
-Validation par le groupe : Léa <à confirmer>, Côme <à confirmer>.
+Validé par le groupe (Léa, Jeanne, Côme) le 2026-10-14 : modèle **sans le type de voyage**, et **aucun mineur signalé** (décision de Côme pour la protection des données).
 
 ### Traitement des données pour le modèle
 - **Retard d'arrivée manquant (310 lignes, 0,3 %)** : remplacé par le retard au départ — les deux sont quasi identiques (corrélation 0,965) ; calcul ligne par ligne, sans fuite d'information.
