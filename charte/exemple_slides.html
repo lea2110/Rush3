@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charte Rush 3 — exemples de slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --noir: #000000; --blanc: #FFFFFF; --fond: #F4F4F4; --gris: #8A8A8A; --gris-clair: #D9D9D9;
+    --bleu: #0055FF; --vert: #009925; --orange: #FF6B00; --jaune: #FFDC00; --rose: #FFB3C9; --brun: #A88565;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #E6E6E6; font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif; color: var(--noir); padding: 32px 16px; }
+  h1.page { font-size: 28px; font-weight: 800; max-width: 1200px; margin: 0 auto 8px; letter-spacing: -0.02em; }
+  p.page { max-width: 1200px; margin: 0 auto 28px; color: #555; }
+
+  /* Une slide = 1920 × 1080, mise à l'échelle par --s */
+  .cadre { max-width: 1200px; margin: 0 auto 40px; }
+  .cadre .num { font-size: 13px; color: #666; margin-bottom: 8px; font-weight: 500; }
+  .ecran { width: 100%; aspect-ratio: 16 / 9; position: relative; overflow: hidden; border-radius: 6px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+  .slide { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; transform-origin: 0 0; transform: scale(var(--s, 0.625)); background: var(--fond); padding: 80px; display: flex; flex-direction: column; }
+
+  .pastilles { display: flex; gap: 10px; margin-bottom: 28px; }
+  .pastilles i { width: 26px; height: 26px; border-radius: 50%; display: block; }
+  .titre { font-size: 64px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; max-width: 1500px; }
+  .sous { font-size: 28px; font-weight: 500; color: #333; margin-top: 18px; }
+  .pied { margin-top: auto; display: flex; justify-content: space-between; align-items: center; font-size: 18px; color: var(--gris); }
+  .etapes { display: flex; gap: 10px; align-items: center; }
+  .etapes i { width: 14px; height: 14px; border-radius: 7px; background: var(--gris-clair); display: block; }
+  .etapes i.fait { background: var(--noir); }
+  .etapes i.ici { width: 40px; background: var(--bleu); }
+  .carte { background: var(--blanc); border-radius: 32px; padding: 48px; }
+  .tuile { width: 96px; height: 96px; display: block; }
+  .tuile.petite { width: 64px; height: 64px; }
+  .pilule { display: inline-block; background: var(--noir); color: var(--blanc); font-weight: 700; font-size: 20px; padding: 10px 22px; border-radius: 999px; }
+  .grand { font-size: 260px; font-weight: 900; letter-spacing: -0.05em; line-height: .9; color: var(--bleu); }
+
+  /* Couverture */
+  .couverture .mot { font-size: 150px; font-weight: 900; letter-spacing: -0.045em; line-height: .95; display: flex; align-items: center; gap: 28px; }
+  .couverture .mot img { width: 130px; height: 130px; }
+  .couverture .bloc { background: var(--blanc); border-radius: 40px; padding: 56px 64px; }
+
+  /* Deux colonnes */
+  .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 56px; flex: 1; }
+  .ligne { display: flex; align-items: center; gap: 24px; font-size: 30px; font-weight: 600; padding: 14px 0; }
+  .ligne small { display: block; font-size: 20px; font-weight: 400; color: #555; margin-top: 2px; }
+  .entete { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
+  .entete h3 { font-size: 36px; font-weight: 800; letter-spacing: -0.02em; }
+
+  /* Chiffre */
+  .chiffre { display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; margin-top: 56px; flex: 1; }
+  .chiffre .carte.principale { display: flex; flex-direction: column; justify-content: center; }
+  .chiffre .explication { font-size: 34px; font-weight: 500; margin-top: 24px; max-width: 760px; line-height: 1.25; }
+  .stats { display: grid; gap: 24px; }
+  .stat { display: flex; align-items: center; gap: 28px; }
+  .stat b { font-size: 64px; font-weight: 900; letter-spacing: -0.03em; display: block; line-height: 1; }
+  .stat span { font-size: 22px; color: #444; }
+
+  /* Graphique */
+  .graph { margin-top: 48px; flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 48px; }
+  .graph img { max-height: 640px; width: auto; max-width: 100%; }
+
+  /* Attention */
+  .attention { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-top: 56px; flex: 1; }
+  .attention .carte { display: flex; flex-direction: column; gap: 18px; }
+  .attention .val { font-size: 120px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+  .attention p { font-size: 26px; line-height: 1.3; }
+  .jaune { background: var(--jaune); }
+
+  /* Décision */
+  .decision ol { list-style: none; padding: 0; margin-top: 56px; display: grid; gap: 24px; }
+  .decision li { display: flex; align-items: center; gap: 32px; font-size: 38px; font-weight: 700; letter-spacing: -0.01em; background: var(--blanc); border-radius: 32px; padding: 32px 40px; }
+  .decision li em { font-style: normal; width: 72px; height: 72px; border-radius: 50%; background: var(--bleu); color: var(--blanc); display: grid; place-items: center; font-size: 36px; font-weight: 900; flex: none; }
+  .decision li img { width: 96px; height: 96px; margin-left: auto; flex: none; }
+  .decision li small { display: block; font-size: 24px; font-weight: 400; color: #444; margin-top: 6px; }
+
+  /* Planche d'icônes */
+  .planche { display: grid; grid-template-columns: repeat(10, 1fr); gap: 28px 20px; margin-top: 48px; }
+  .planche figure { text-align: center; font-size: 18px; color: #333; }
+  .planche figure img { width: 112px; height: 112px; display: block; margin: 0 auto 10px; }
+</style>
+</head>
+<body>
+
+<h1 class="page">Charte Rush 3 — exemples de slides</h1>
+<p class="page">Format 16:9 (1920 × 1080). Icônes : <code>charte/icones/</code>. Couleurs et règles : <code>charte/CHARTE.md</code>.</p>
+
+<!-- 1. Couverture -->
+<div class="cadre"><div class="num">1 · Couverture</div><div class="ecran">
+<section class="slide couverture">
+  <div class="bloc">
+    <div class="pastilles"><i style="background:var(--vert)"></i><i style="background:var(--bleu)"></i><i style="background:var(--noir)"></i><i style="background:var(--gris-clair)"></i><i style="background:var(--blanc);border:2px solid var(--gris-clair)"></i></div>
+    <div class="mot">Satisfaction <img src="icones/satisfait.svg" alt=""><img src="icones/avion.svg" alt=""></div>
+    <div class="mot"><img src="icones/rond/passager.svg" alt="">passagers</div>
+  </div>
+  <div class="bloc" style="margin-top:32px; display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <div class="pastilles" style="margin-bottom:18px"><i style="background:var(--rose)"></i><i style="background:var(--brun)"></i><i style="background:var(--orange)"></i><i style="background:var(--jaune)"></i><i style="background:var(--bleu)"></i><i style="background:var(--noir)"></i></div>
+      <div style="font-size:44px;font-weight:800;letter-spacing:-0.02em">Où investir, et qui aborder à l'arrivée</div>
+    </div>
+    <div style="display:flex;gap:16px">
+      <img class="tuile" src="icones/valise.svg" alt=""><img class="tuile" src="icones/rond/horloge.svg" alt=""><img class="tuile" src="icones/wifi.svg" alt=""><img class="tuile" src="icones/rond/famille.svg" alt=""><img class="tuile" src="icones/repas.svg" alt="">
+    </div>
+  </div>
+  <div class="pied"><span>Léa · Jeanne · Côme — Epitech Bootcamp Data, Rush 3 · octobre 2026</span><span class="etapes"></span></div>
+</section></div></div>
+
+<!-- 2. Deux colonnes -->
+<div class="cadre"><div class="num">2 · Deux colonnes</div><div class="ecran">
+<section class="slide">
+  <div class="pastilles"><i style="background:var(--bleu)"></i><i style="background:var(--gris-clair)"></i></div>
+  <div class="titre">Le modèle n'utilise que ce que la compagnie sait à l'atterrissage</div>
+  <div class="deux">
+    <div class="carte">
+      <div class="entete"><img class="tuile petite" src="icones/valide.svg" alt=""><h3>Utilisé</h3></div>
+      <div class="ligne"><img class="tuile petite" src="icones/siege.svg" alt=""><div>Classe du billet<small>billet</small></div></div>
+      <div class="ligne"><img class="tuile petite" src="icones/passager.svg" alt=""><div>Âge et statut de fidélité<small>réservation, programme de fidélité</small></div></div>
+      <div class="ligne"><img class="tuile petite" src="icones/avion.svg" alt=""><div>Distance du vol<small>plan de vol</small></div></div>
+      <div class="ligne"><img class="tuile petite" src="icones/horloge.svg" alt=""><div>Retards au départ et à l'arrivée<small>opérations</small></div></div>
+    </div>
+    <div class="carte">
+      <div class="entete"><img class="tuile petite" src="icones/exclu.svg" alt=""><h3>Écarté</h3></div>
+      <div class="ligne"><img class="tuile petite" src="icones/wifi.svg" alt="" style="filter:grayscale(1);opacity:.45"><div>Notes de service<small>n'existent qu'après l'enquête</small></div></div>
+      <div class="ligne"><img class="tuile petite" src="icones/valise.svg" alt="" style="filter:grayscale(1);opacity:.45"><div>Motif du voyage<small>déclaré dans l'enquête, inconnu sinon</small></div></div>
+      <div class="ligne"><img class="tuile petite" src="icones/confidentiel.svg" alt=""><div>Genre<small>aucun effet, risque de discrimination</small></div></div>
+    </div>
+  </div>
+  <div class="pied" style="margin-top:32px"><span>Volet 2 — Prédire</span><span class="etapes"></span></div>
+</section></div></div>
+
+<!-- 3. Message + chiffre -->
+<div class="cadre"><div class="num">3 · Message + chiffre</div><div class="ecran">
+<section class="slide">
+  <div class="pastilles"><i style="background:var(--bleu)"></i><i style="background:var(--orange)"></i></div>
+  <div class="titre">Sur 100 passagers abordés, 94 sont vraiment mécontents</div>
+  <div class="chiffre">
+    <div class="carte principale">
+      <div style="display:flex;align-items:flex-end;gap:28px"><div class="grand">94</div><img class="tuile" src="icones/rond/mecontent.svg" alt="" style="margin-bottom:24px"></div>
+      <div class="explication">Le modèle choisit les 10 % de passagers les plus à risque : ce sont presque toujours les bons.</div>
+    </div>
+    <div class="stats">
+      <div class="carte stat"><img class="tuile" src="icones/euro.svg" alt=""><div><b>5 375 €</b><span>gagnés pour 1 000 passagers</span></div></div>
+      <div class="carte stat"><img class="tuile" src="icones/graphique.svg" alt=""><div><b>× 3,8</b><span>par rapport au hasard</span></div></div>
+      <div class="carte stat"><img class="tuile" src="icones/dialogue.svg" alt=""><div><b>6 sur 100</b><span>approches inutiles</span></div></div>
+    </div>
+  </div>
+  <div class="pied" style="margin-top:32px"><span>Évaluation finale sur 25 976 passagers jamais vus par le modèle</span><span class="etapes"></span></div>
+</section></div></div>
+
+<!-- 4. Message + graphique -->
+<div class="cadre"><div class="num">4 · Message + graphique</div><div class="ecran">
+<section class="slide">
+  <div class="pastilles"><i style="background:var(--bleu)"></i><i style="background:var(--gris-clair)"></i></div>
+  <div class="titre">Le modèle fait mieux que toute règle simple</div>
+  <div class="carte graph"><img src="exemple_graphique_slide.png" alt="Gain net pour 1 000 passagers : hasard 1 429 €, règle Eco puis retard 4 459 €, modèle 5 375 €"></div>
+  <div class="pied" style="margin-top:32px"><span>Gain net pour 1 000 passagers arrivants, hypothèses de la direction</span><span class="etapes"></span></div>
+</section></div></div>
+
+<!-- 5. Point d'attention -->
+<div class="cadre"><div class="num">5 · Point d'attention</div><div class="ecran">
+<section class="slide">
+  <div class="pastilles"><i style="background:var(--jaune)"></i><i style="background:var(--noir)"></i></div>
+  <div class="titre">Aucun enfant n'est jamais signalé aux équipes</div>
+  <div class="attention">
+    <div class="carte jaune"><img class="tuile" src="icones/noir/alerte.svg" alt=""><div class="val">23,7 %</div><p>des passagers signalés seraient mineurs sans précaution</p></div>
+    <div class="carte"><img class="tuile" src="icones/rond/famille.svg" alt=""><div class="val">0 %</div><p>après exclusion des mineurs du signalement</p></div>
+    <div class="carte"><img class="tuile" src="icones/rond/bouclier.svg" alt=""><div class="val">−2 %</div><p>de gain seulement : la protection des enfants coûte peu</p></div>
+  </div>
+  <div class="pied" style="margin-top:32px"><span>Volet 3 — Protection des données</span><span class="etapes"></span></div>
+</section></div></div>
+
+<!-- 6. Décision -->
+<div class="cadre"><div class="num">6 · Décision</div><div class="ecran">
+<section class="slide decision">
+  <div class="pastilles"><i style="background:var(--bleu)"></i><i style="background:var(--vert)"></i><i style="background:var(--noir)"></i></div>
+  <div class="titre">Ce que nous vous proposons</div>
+  <ol>
+    <li><em>1</em><div>Investir dans les services qui comptent le plus<small>leviers identifiés par l'analyse de satisfaction</small></div><img src="icones/rond/satisfait.svg" alt=""></li>
+    <li><em>2</em><div>Lancer un pilote d'accueil à l'arrivée sur quelques aéroports<small>avec un groupe témoin pour mesurer l'effet réel</small></div><img src="icones/rond/dialogue.svg" alt=""></li>
+    <li><em>3</em><div>Encadrer l'usage des données avant tout déploiement<small>aucun mineur signalé, information minimale montrée aux agents</small></div><img src="icones/rond/bouclier.svg" alt=""></li>
+  </ol>
+  <div class="pied"><span>Décisions demandées à la direction Expérience Client</span><span class="etapes"></span></div>
+</section></div></div>
+
+<!-- 7. Planche d'icônes -->
+<div class="cadre"><div class="num">Planche des icônes</div><div class="ecran">
+<section class="slide">
+  <div class="pastilles"><i style="background:var(--vert)"></i><i style="background:var(--bleu)"></i><i style="background:var(--orange)"></i><i style="background:var(--jaune)"></i><i style="background:var(--rose)"></i><i style="background:var(--brun)"></i><i style="background:var(--noir)"></i></div>
+  <div class="titre">Icônes du projet</div>
+  <div class="planche">
+    <figure><img src="icones/avion.svg" alt="">avion</figure>
+    <figure><img src="icones/atterrissage.svg" alt="">atterrissage</figure>
+    <figure><img src="icones/passager.svg" alt="">passager</figure>
+    <figure><img src="icones/famille.svg" alt="">famille</figure>
+    <figure><img src="icones/valise.svg" alt="">valise</figure>
+    <figure><img src="icones/siege.svg" alt="">siege</figure>
+    <figure><img src="icones/horloge.svg" alt="">horloge</figure>
+    <figure><img src="icones/wifi.svg" alt="">wifi</figure>
+    <figure><img src="icones/repas.svg" alt="">repas</figure>
+    <figure><img src="icones/euro.svg" alt="">euro</figure>
+    <figure><img src="icones/satisfait.svg" alt="">satisfait</figure>
+    <figure><img src="icones/mecontent.svg" alt="">mecontent</figure>
+    <figure><img src="icones/dialogue.svg" alt="">dialogue</figure>
+    <figure><img src="icones/cible.svg" alt="">cible</figure>
+    <figure><img src="icones/graphique.svg" alt="">graphique</figure>
+    <figure><img src="icones/bouclier.svg" alt="">bouclier</figure>
+    <figure><img src="icones/confidentiel.svg" alt="">confidentiel</figure>
+    <figure><img src="icones/alerte.svg" alt="">alerte</figure>
+    <figure><img src="icones/valide.svg" alt="">valide</figure>
+    <figure><img src="icones/exclu.svg" alt="">exclu</figure>
+  </div>
+  <div class="pied"><span>Tuiles carrées : icones/ · rondes : icones/rond/ · pictogrammes seuls : icones/noir/ et icones/blanc/</span></div>
+</section></div></div>
+
+<script>
+  // Met chaque slide de 1920 × 1080 à l'échelle de son cadre.
+  function ajuster() {
+    document.querySelectorAll('.ecran').forEach(e => e.style.setProperty('--s', e.clientWidth / 1920));
+  }
+  window.addEventListener('resize', ajuster);
+  ajuster();
+
+  // Points d'étape : noir = déjà vu, bleu allongé = slide actuelle, gris = à venir.
+  const etapes = document.querySelectorAll('.etapes');
+  etapes.forEach((zone, position) => {
+    for (let k = 0; k < etapes.length; k++) {
+      const point = document.createElement('i');
+      if (k < position) point.className = 'fait';
+      if (k === position) point.className = 'ici';
+      zone.appendChild(point);
+    }
+  });
+</script>
+</body>
+</html>

@@ -32,12 +32,14 @@ Rush3/
 ├── src/                         ← code partagé, importé par les notebooks
 │   ├── data.py                  ← load_train() / load_test() : mêmes traitements pour les deux fichiers
 │   ├── features.py              ← variables connues à l'atterrissage
-│   └── economics.py             ← gain net (40 €, 600 €, 1/3, 1/2, capacité 10 %)
+│   ├── economics.py             ← gain net (40 €, 600 €, 1/3, 1/2, capacité 10 %)
+│   └── charte.py                ← couleurs et style des graphiques (appliquer())
 ├── notebooks/
 │   ├── 01_exploration_facteurs.ipynb    ← volet 1 (Léa)
 │   ├── 02_modeles.ipynb                 ← volet 2 (Jeanne), train uniquement
 │   └── 03_evaluation_finale_test.ipynb  ← volet 2 (Jeanne), exécuté UNE seule fois
 ├── figures/                     ← graphiques exportés par les notebooks
+├── charte/                      ← charte graphique : CHARTE.md, style matplotlib, exemples
 └── rapport/                     ← rapport PDF et présentation (Côme)
 ```
 
@@ -63,6 +65,7 @@ Toutes les graines aléatoires sont fixées (`RANDOM_STATE = 42` dans `src/data.
 - Les données se chargent toujours avec `load_train()` / `load_test()`, jamais en relisant les CSV à la main.
 - Avant de committer un notebook : *Redémarrer et tout exécuter*, il doit tourner de haut en bas.
 - Chaque chiffre cité dans le rapport doit être visible dans un notebook.
+- Slides, rapport et graphiques suivent la [charte graphique](charte/CHARTE.md) ; dans un notebook : `from src.charte import appliquer; appliquer()`.
 
 ## Travailler avec Git
 
