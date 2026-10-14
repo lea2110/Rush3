@@ -52,7 +52,7 @@ def planche_couleurs():
     plt.close(fig)
 
 
-def graphique_type():
+def graphique_type(fichier, avec_titre=True):
     options = ["Hasard", "Règle : Eco puis retard", "Modèle retenu"]
     gains = [1429, 4459, 5375]
 
@@ -66,14 +66,16 @@ def graphique_type():
     ax.grid(False)
     ax.spines["bottom"].set_visible(False)
     ax.set_xlabel("Gain net pour 1 000 passagers arrivants", color=COULEURS["gris"], fontweight="normal")
-    ax.set_title("Le modèle rapporte 3,8 fois plus que le hasard")
+    if avec_titre:  # sur une slide, c'est le titre de la slide qui porte le message
+        ax.set_title("Le modèle rapporte 3,8 fois plus que le hasard")
     ax.text(0, -0.16, "Évaluation finale sur 25 976 passagers jamais vus · mineurs jamais signalés",
             transform=ax.transAxes, fontsize=11, color=COULEURS["gris"])
-    fig.savefig(ICI / "exemple_graphique.png")
+    fig.savefig(ICI / fichier)
     plt.close(fig)
 
 
 if __name__ == "__main__":
     planche_couleurs()
-    graphique_type()
+    graphique_type("exemple_graphique.png")
+    graphique_type("exemple_graphique_slide.png", avec_titre=False)
     print("Visuels générés dans", ICI)

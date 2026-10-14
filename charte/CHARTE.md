@@ -2,7 +2,7 @@
 
 Une seule charte pour les **slides**, le **rapport PDF** et les **graphiques des notebooks**, pour que tout le rendu ait la même identité.
 
-Inspiration : signalétique et pictogrammes d'aéroport — fond clair, cartes blanches arrondies, typographie grasse et noire, pastilles de couleurs vives. C'est lisible de loin, sobre, et cohérent avec le sujet (le parcours passager).
+Inspiration : planches de pictogrammes « Accessibility / Human / Objects » et signalétique d'aéroport — fond clair, cartes blanches arrondies, typographie grasse et noire, pastilles de couleurs vives, pictogrammes pleins dans des tuiles de couleur. C'est lisible de loin, sobre, et cohérent avec le sujet (le parcours passager).
 
 ![Couleurs et rôles](palette.png)
 
@@ -63,17 +63,45 @@ Inspiration : signalétique et pictogrammes d'aéroport — fond clair, cartes b
 
 ---
 
-## 4. Éléments graphiques
+## 4. Habillage : icônes, cartes, pastilles
 
-**Cartes.** Rectangle blanc `#FFFFFF` aux coins arrondis (rayon ≈ 24 px), sur fond `#F4F4F4`, sans ombre. Chaque carte contient une idée : un chiffre, une liste courte, un graphique.
+### Icônes du projet
+20 icônes dessinées pour le projet, dans l'esprit des pictogrammes d'aéroport : un pictogramme plein et arrondi, posé dans une tuile de couleur.
 
-**Pastilles.** Rangée de petits ronds de couleur (comme sur l'image de référence), en haut à gauche d'une carte, pour indiquer de quoi elle parle : bleu = modèle, orange = insatisfaits, jaune = attention.
+| Thème | Icônes |
+|---|---|
+| Voyage | `avion`, `atterrissage`, `valise`, `siege`, `horloge` (retards) |
+| Passagers | `passager`, `famille` (mineurs), `satisfait`, `mecontent`, `dialogue` (aborder un passager) |
+| Services | `wifi`, `repas` |
+| Analyse | `graphique`, `cible`, `euro` |
+| Données | `bouclier` (protection), `confidentiel`, `alerte`, `valide`, `exclu` |
 
-**Pictogrammes.** Style plein et arrondi, blanc ou noir dans une tuile de couleur carrée arrondie ou ronde. Bibliothèque gratuite conseillée : [Material Symbols Rounded](https://fonts.google.com/icons?icon.style=Rounded) (style *Filled*). Exemples utiles : `flight_land`, `person`, `groups`, `child_care`, `euro`, `schedule`, `shield`, `visibility_off`.
+**Où les trouver :**
 
-**Étiquettes.** Pilule (coins entièrement arrondis) noire avec texte blanc, pour des mots-clés : « Connu à l'atterrissage », « Exclu », « Recommandé ».
+| Dossier | Contenu | Pour |
+|---|---|---|
+| `charte/icones/*.svg` | tuile carrée arrondie | Keynote, PowerPoint, Canva, Figma |
+| `charte/icones/rond/*.svg` | tuile ronde | idem |
+| `charte/icones/png/` et `png/rond/` | mêmes tuiles en PNG transparent 480 × 480 | Google Slides (qui n'accepte pas le SVG) |
+| `charte/icones/noir/` et `blanc/` | pictogramme seul, sans tuile | sur une carte jaune (noir) ou une slide bleue (blanc) |
 
----
+**Changer la couleur d'une icône :** dans `charte/icones.py`, modifier la couleur par défaut dans `PICTOS`, puis `python charte/icones.py`. Chaque couleur a sa couleur de pictogramme (blanc sur bleu, vert, brun et noir ; noir sur orange, jaune, rose et gris clair).
+
+**Règles :**
+- Une icône **accompagne** un mot, elle ne le remplace pas.
+- Tailles sur une slide 1920 × 1080 : **96 px** à côté d'un chiffre ou d'un titre de carte, **64 px** en début de ligne de liste, **130 px** dans un titre de couverture.
+- Même idée = même icône sur toutes les slides (`famille` = mineurs, `horloge` = retards…).
+- Une option écartée garde son icône en **gris** (filtre niveaux de gris, opacité 45 %).
+- Pas d'icône sur une tuile de même couleur que la carte (ex. tuile jaune sur carte jaune) : prendre la version `noir/`.
+
+### Cartes
+Rectangle blanc aux coins arrondis (rayon 32 px sur une slide 1920 × 1080), sur le fond `#F4F4F4`, sans ombre ni bordure. Une carte = une idée. Une carte peut être **jaune** pour un point d'attention, ou **bleue** pour la décision finale.
+
+### Pastilles
+Rangée de petits ronds de couleur (26 px, espacés de 10 px) au-dessus du titre, comme sur l'image d'inspiration. Elles annoncent les couleurs utilisées dans la slide : bleu + gris = comparaison du modèle, jaune + noir = point d'attention. Sur la couverture, la rangée complète.
+
+### Étiquettes
+Pilule noire, texte blanc en gras 20 px, pour des mots-clés : « Connu à l'atterrissage », « Exclu », « Recommandé ».
 
 ## 5. Graphiques
 
@@ -117,6 +145,8 @@ Exemple produit avec la charte (`python charte/exemples.py`) :
 **Rythme pour 10 minutes :** 8 à 10 slides, soit environ une minute par slide.
 
 **Pied de slide :** numéro à droite, en gris 12 pt. Pas de logo sur chaque slide.
+
+**Exemple complet :** ouvrir `charte/exemple_slides.html` dans un navigateur. Il montre 6 slides réalisées avec la charte et les vraies données du projet (couverture, deux colonnes, chiffre clé, graphique, point d'attention, décision) et la planche des 20 icônes. Pour un graphique sur une slide, utiliser la version **sans titre** (`exemple_graphique_slide.png`) : c'est le titre de la slide qui porte le message.
 
 ---
 
