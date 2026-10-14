@@ -83,7 +83,7 @@ Inspiration : planches de pictogrammes « Accessibility / Human / Objects » et 
 | `charte/icones/*.svg` | tuile carrée arrondie | Keynote, PowerPoint, Canva, Figma |
 | `charte/icones/rond/*.svg` | tuile ronde | idem |
 | `charte/icones/png/` et `png/rond/` | mêmes tuiles en PNG transparent 480 × 480 | Google Slides (qui n'accepte pas le SVG) |
-| `charte/icones/noir/` et `blanc/` | pictogramme seul, sans tuile | sur une carte jaune (noir) ou une slide bleue (blanc) |
+| `charte/icones/noir/` et `blanc/` | pictogramme seul, sans tuile | sur une carte jaune ou blanche (noir) ; version blanche réservée aux tuiles de couleur foncée |
 
 **Changer la couleur d'une icône :** dans `charte/icones.py`, modifier la couleur par défaut dans `PICTOS`, puis `python charte/icones.py`. Chaque couleur a sa couleur de pictogramme (blanc sur bleu, vert, brun et noir ; noir sur orange, jaune, rose et gris clair).
 
@@ -95,7 +95,7 @@ Inspiration : planches de pictogrammes « Accessibility / Human / Objects » et 
 - Pas d'icône sur une tuile de même couleur que la carte (ex. tuile jaune sur carte jaune) : prendre la version `noir/`.
 
 ### Cartes
-Rectangle blanc aux coins arrondis (rayon 32 px sur une slide 1920 × 1080), sur le fond `#F4F4F4`, sans ombre ni bordure. Une carte = une idée. Une carte peut être **jaune** pour un point d'attention, ou **bleue** pour la décision finale.
+Rectangle blanc aux coins arrondis (rayon 32 px sur une slide 1920 × 1080), sur le fond `#F4F4F4`, sans ombre ni bordure. Une carte = une idée. Une carte peut être **jaune** pour un point d'attention. Pas de carte ni de slide à fond bleu ou foncé (voir *Fond des slides*).
 
 ### Pastilles
 Rangée de petits ronds de couleur (26 px, espacés de 10 px) au-dessus du titre, comme sur l'image d'inspiration. Elles annoncent les couleurs utilisées dans la slide : bleu + gris = comparaison du modèle, jaune + noir = point d'attention. Sur la couverture, la rangée complète.
@@ -140,11 +140,13 @@ Exemple produit avec la charte (`python charte/exemples.py`) :
 | **Message + graphique** | une comparaison | titre en haut ; graphique dans une carte blanche, plein largeur ; source en gris |
 | **Deux colonnes** | opposer deux idées (utilisé / exclu, avant / après) | deux cartes côte à côte, une pastille de couleur chacune |
 | **Trois chiffres** | synthèse | trois cartes, un chiffre + une ligne chacune |
-| **Décision** | ce qu'on demande à la direction | fond bleu, texte blanc, 3 décisions numérotées maximum |
+| **Décision** | ce qu'on demande à la direction | fond gris comme les autres ; une carte blanche par décision (3 maximum), numéro dans une pastille bleue, une icône de couleur à droite |
 
 **Rythme pour 10 minutes :** 8 à 10 slides, soit environ une minute par slide.
 
-**Pied de slide :** numéro à droite, en gris 12 pt. Pas de logo sur chaque slide.
+**Fond des slides : toujours gris clair `#F4F4F4`.** Jamais de slide à fond bleu, noir ou foncé, même pour la couverture ou la décision : en projection, un grand aplat foncé éblouit, écrase le contraste et rend le texte moins lisible. La couleur vient des **icônes**, des **pastilles** et des **graphiques**, pas du fond.
+
+**Pied de slide :** à gauche, une ligne de contexte en gris (source ou volet) ; à droite, des **points d'étape** plutôt qu'un numéro. Un point par slide de la présentation : **noir** = slide déjà vue, **pilule bleue allongée** (40 × 14 px) = slide actuelle, **gris clair** = slides à venir. Points de 14 px, espacés de 10 px. Le public voit où on en est sans compter. Pas de logo sur chaque slide.
 
 **Exemple complet :** ouvrir `charte/exemple_slides.html` dans un navigateur. Il montre 6 slides réalisées avec la charte et les vraies données du projet (couverture, deux colonnes, chiffre clé, graphique, point d'attention, décision) et la planche des 20 icônes. Pour un graphique sur une slide, utiliser la version **sans titre** (`exemple_graphique_slide.png`) : c'est le titre de la slide qui porte le message.
 
@@ -156,4 +158,5 @@ Exemple produit avec la charte (`python charte/exemples.py`) :
 - Plus de deux couleurs vives sur une même slide (en plus du noir et des gris).
 - Des paragraphes : au-delà de 3 lignes, couper ou passer à l'oral.
 - Des captures d'écran de notebook ou de tableau pandas : refaire le graphique avec la charte.
+- Un fond de slide bleu, noir ou foncé : toujours le fond gris clair.
 - Des termes techniques à l'écran (« précision », « classe positive », « AUC ») : écrire « sur 100 passagers abordés, 94 sont mécontents ».

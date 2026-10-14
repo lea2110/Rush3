@@ -26,7 +26,11 @@
   .pastilles i { width: 26px; height: 26px; border-radius: 50%; display: block; }
   .titre { font-size: 64px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; max-width: 1500px; }
   .sous { font-size: 28px; font-weight: 500; color: #333; margin-top: 18px; }
-  .pied { margin-top: auto; display: flex; justify-content: space-between; font-size: 18px; color: var(--gris); }
+  .pied { margin-top: auto; display: flex; justify-content: space-between; align-items: center; font-size: 18px; color: var(--gris); }
+  .etapes { display: flex; gap: 10px; align-items: center; }
+  .etapes i { width: 14px; height: 14px; border-radius: 7px; background: var(--gris-clair); display: block; }
+  .etapes i.fait { background: var(--noir); }
+  .etapes i.ici { width: 40px; background: var(--bleu); }
   .carte { background: var(--blanc); border-radius: 32px; padding: 48px; }
   .tuile { width: 96px; height: 96px; display: block; }
   .tuile.petite { width: 64px; height: 64px; }
@@ -66,13 +70,11 @@
   .jaune { background: var(--jaune); }
 
   /* Décision */
-  .decision { background: var(--bleu); color: var(--blanc); }
-  .decision .titre { color: var(--blanc); }
-  .decision ol { list-style: none; padding: 0; margin-top: 64px; display: grid; gap: 28px; }
-  .decision li { display: flex; align-items: center; gap: 32px; font-size: 40px; font-weight: 700; letter-spacing: -0.01em; }
-  .decision li em { font-style: normal; width: 84px; height: 84px; border-radius: 50%; background: var(--blanc); color: var(--bleu); display: grid; place-items: center; font-size: 40px; font-weight: 900; flex: none; }
-  .decision li small { display: block; font-size: 24px; font-weight: 400; opacity: .85; margin-top: 4px; }
-  .decision .pied { color: rgba(255,255,255,.7); }
+  .decision ol { list-style: none; padding: 0; margin-top: 56px; display: grid; gap: 24px; }
+  .decision li { display: flex; align-items: center; gap: 32px; font-size: 38px; font-weight: 700; letter-spacing: -0.01em; background: var(--blanc); border-radius: 32px; padding: 32px 40px; }
+  .decision li em { font-style: normal; width: 72px; height: 72px; border-radius: 50%; background: var(--bleu); color: var(--blanc); display: grid; place-items: center; font-size: 36px; font-weight: 900; flex: none; }
+  .decision li img { width: 96px; height: 96px; margin-left: auto; flex: none; }
+  .decision li small { display: block; font-size: 24px; font-weight: 400; color: #444; margin-top: 6px; }
 
   /* Planche d'icônes */
   .planche { display: grid; grid-template-columns: repeat(10, 1fr); gap: 28px 20px; margin-top: 48px; }
@@ -102,7 +104,7 @@
       <img class="tuile" src="icones/valise.svg" alt=""><img class="tuile" src="icones/rond/horloge.svg" alt=""><img class="tuile" src="icones/wifi.svg" alt=""><img class="tuile" src="icones/rond/famille.svg" alt=""><img class="tuile" src="icones/repas.svg" alt="">
     </div>
   </div>
-  <div class="pied"><span>Léa · Jeanne · Côme — Epitech Bootcamp Data, Rush 3</span><span>Octobre 2026</span></div>
+  <div class="pied"><span>Léa · Jeanne · Côme — Epitech Bootcamp Data, Rush 3 · octobre 2026</span><span class="etapes"></span></div>
 </section></div></div>
 
 <!-- 2. Deux colonnes -->
@@ -125,7 +127,7 @@
       <div class="ligne"><img class="tuile petite" src="icones/confidentiel.svg" alt=""><div>Genre<small>aucun effet, risque de discrimination</small></div></div>
     </div>
   </div>
-  <div class="pied" style="margin-top:32px"><span>Volet 2 — Prédire</span><span>2</span></div>
+  <div class="pied" style="margin-top:32px"><span>Volet 2 — Prédire</span><span class="etapes"></span></div>
 </section></div></div>
 
 <!-- 3. Message + chiffre -->
@@ -144,7 +146,7 @@
       <div class="carte stat"><img class="tuile" src="icones/dialogue.svg" alt=""><div><b>6 sur 100</b><span>approches inutiles</span></div></div>
     </div>
   </div>
-  <div class="pied" style="margin-top:32px"><span>Évaluation finale sur 25 976 passagers jamais vus par le modèle</span><span>3</span></div>
+  <div class="pied" style="margin-top:32px"><span>Évaluation finale sur 25 976 passagers jamais vus par le modèle</span><span class="etapes"></span></div>
 </section></div></div>
 
 <!-- 4. Message + graphique -->
@@ -153,7 +155,7 @@
   <div class="pastilles"><i style="background:var(--bleu)"></i><i style="background:var(--gris-clair)"></i></div>
   <div class="titre">Le modèle fait mieux que toute règle simple</div>
   <div class="carte graph"><img src="exemple_graphique_slide.png" alt="Gain net pour 1 000 passagers : hasard 1 429 €, règle Eco puis retard 4 459 €, modèle 5 375 €"></div>
-  <div class="pied" style="margin-top:32px"><span>Gain net pour 1 000 passagers arrivants, hypothèses de la direction</span><span>4</span></div>
+  <div class="pied" style="margin-top:32px"><span>Gain net pour 1 000 passagers arrivants, hypothèses de la direction</span><span class="etapes"></span></div>
 </section></div></div>
 
 <!-- 5. Point d'attention -->
@@ -166,20 +168,20 @@
     <div class="carte"><img class="tuile" src="icones/rond/famille.svg" alt=""><div class="val">0 %</div><p>après exclusion des mineurs du signalement</p></div>
     <div class="carte"><img class="tuile" src="icones/rond/bouclier.svg" alt=""><div class="val">−2 %</div><p>de gain seulement : la protection des enfants coûte peu</p></div>
   </div>
-  <div class="pied" style="margin-top:32px"><span>Volet 3 — Protection des données</span><span>5</span></div>
+  <div class="pied" style="margin-top:32px"><span>Volet 3 — Protection des données</span><span class="etapes"></span></div>
 </section></div></div>
 
 <!-- 6. Décision -->
 <div class="cadre"><div class="num">6 · Décision</div><div class="ecran">
 <section class="slide decision">
-  <div class="pastilles"><i style="background:var(--blanc)"></i><i style="background:var(--jaune)"></i></div>
+  <div class="pastilles"><i style="background:var(--bleu)"></i><i style="background:var(--vert)"></i><i style="background:var(--noir)"></i></div>
   <div class="titre">Ce que nous vous proposons</div>
   <ol>
-    <li><em>1</em><div>Investir dans les services qui comptent le plus<small>leviers identifiés par l'analyse de satisfaction</small></div></li>
-    <li><em>2</em><div>Lancer un pilote d'accueil à l'arrivée sur quelques aéroports<small>avec un groupe témoin pour mesurer l'effet réel</small></div></li>
-    <li><em>3</em><div>Encadrer l'usage des données avant tout déploiement<small>aucun mineur signalé, information minimale montrée aux agents</small></div></li>
+    <li><em>1</em><div>Investir dans les services qui comptent le plus<small>leviers identifiés par l'analyse de satisfaction</small></div><img src="icones/rond/satisfait.svg" alt=""></li>
+    <li><em>2</em><div>Lancer un pilote d'accueil à l'arrivée sur quelques aéroports<small>avec un groupe témoin pour mesurer l'effet réel</small></div><img src="icones/rond/dialogue.svg" alt=""></li>
+    <li><em>3</em><div>Encadrer l'usage des données avant tout déploiement<small>aucun mineur signalé, information minimale montrée aux agents</small></div><img src="icones/rond/bouclier.svg" alt=""></li>
   </ol>
-  <div class="pied"><span>Décisions demandées à la direction Expérience Client</span><span>6</span></div>
+  <div class="pied"><span>Décisions demandées à la direction Expérience Client</span><span class="etapes"></span></div>
 </section></div></div>
 
 <!-- 7. Planche d'icônes -->
@@ -209,7 +211,7 @@
     <figure><img src="icones/valide.svg" alt="">valide</figure>
     <figure><img src="icones/exclu.svg" alt="">exclu</figure>
   </div>
-  <div class="pied"><span>Tuiles carrées : icones/ · rondes : icones/rond/ · pictogrammes seuls : icones/noir/ et icones/blanc/</span><span></span></div>
+  <div class="pied"><span>Tuiles carrées : icones/ · rondes : icones/rond/ · pictogrammes seuls : icones/noir/ et icones/blanc/</span></div>
 </section></div></div>
 
 <script>
@@ -219,6 +221,17 @@
   }
   window.addEventListener('resize', ajuster);
   ajuster();
+
+  // Points d'étape : noir = déjà vu, bleu allongé = slide actuelle, gris = à venir.
+  const etapes = document.querySelectorAll('.etapes');
+  etapes.forEach((zone, position) => {
+    for (let k = 0; k < etapes.length; k++) {
+      const point = document.createElement('i');
+      if (k < position) point.className = 'fait';
+      if (k === position) point.className = 'ici';
+      zone.appendChild(point);
+    }
+  });
 </script>
 </body>
 </html>
