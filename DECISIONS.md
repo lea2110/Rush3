@@ -78,5 +78,14 @@ Pour 1 000 passagers arrivants : 100 abordés, ≈ 94 réellement insatisfaits, 
 
 ## Évaluation finale sur test.csv
 
-- Exécutée une seule fois le <date, heure> par Jeanne, après validation du modèle par le groupe (`notebooks/03_evaluation_finale_test.ipynb`).
-- Résultat : <précision, gain net pour 1 000 passagers>
+- Exécutée **une seule fois le 2026-10-14 à 15:05** par Jeanne, après validation du modèle par le groupe (`notebooks/03_evaluation_finale_test.ipynb`). Code committé avant exécution (`bd1dc4d`).
+- Modèle réentraîné sur la totalité de train, appliqué aux 25 976 passagers de test, mineurs exclus du signalement.
+
+| Sur test.csv (passagers « du mois prochain ») | Passagers abordés | dont insatisfaits | Précision | Gain / 1 000 passagers |
+|---|---|---|---|---|
+| Hasard | 2 597 | 1 410 | 0,543 | 1 429 € |
+| Règle : Eco puis retard | 2 597 | 2 197 | 0,846 | 4 459 € |
+| **Modèle retenu** | 2 597 | 2 435 | **0,938** | **5 375 €** |
+
+- **Stable par rapport à la validation croisée** (précision 0,939, 5 386 €) : la performance annoncée est fiable.
+- Le modèle rapporte **+916 €** pour 1 000 passagers par rapport à la meilleure règle simple, et **3,8 fois** plus que le hasard.
