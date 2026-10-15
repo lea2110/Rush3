@@ -40,7 +40,8 @@ Rush3/
 │   └── 03_evaluation_finale_test.ipynb  ← volet 2 (Jeanne), exécuté UNE seule fois
 ├── figures/                     ← graphiques exportés par les notebooks
 ├── charte/                      ← charte graphique : CHARTE.md, style matplotlib, exemples
-└── rapport/                     ← rapport PDF et présentation (Côme)
+└── rapport/                     ← rapport PDF (Côme) et présentation :
+                                   generer_presentation.py → presentation_rush3.pptx
 ```
 
 ## Reproduire les résultats
