@@ -42,6 +42,8 @@ Inspiration : planches de pictogrammes « Accessibility / Human / Objects » et 
 
 **Ordre des couleurs** quand on compare des catégories sans rôle particulier : bleu, orange, vert, brun, rose, jaune.
 
+**Daltonisme (vérifié par le calcul, outil de validation de palette) :** le **vert** et l'**orange** sont presque indiscernables pour une personne protanope (écart ΔE de 1,8, minimum requis : 8). Ne jamais les opposer comme deux catégories d'un même graphique (ex. satisfaits / mécontents) : utiliser **une couleur forte face au gris clair**, toujours avec des étiquettes. Le bleu reste bien distinct du gris (ΔE 23).
+
 ---
 
 ## 3. Typographie
