@@ -28,7 +28,7 @@ BLEU, VERT, ORANGE, JAUNE, ROSE, BRUN = "0055FF", "009925", "FF6B00", "FFDC00", 
 POLICE = "Arial"  # repli de la charte (Inter si installée partout)
 
 W, H, M = 13.333, 7.5, 0.556  # slide 16:9, marge de 80 px
-NB_SLIDES = 16
+NB_SLIDES = 21
 
 
 def rgb(hexa):
@@ -109,7 +109,8 @@ def titre(slide, txt, couleurs):
     texte(slide, M, 0.85, W - 2 * M, 1.0, txt, taille=30, gras=True, ancre=MSO_ANCHOR.TOP, interligne=0.95)
 
 
-def pied(slide, txt, numero):
+def pied(slide, txt, numero=None):
+    numero = len(prs.slides)  # numéro réel de la slide, même si on en insère
     texte(slide, M, 6.92, 9.0, 0.3, txt, taille=11, couleur=GRIS, ancre=MSO_ANCHOR.MIDDLE)
     # Points d'étape : noir = vu, pilule bleue = slide actuelle, gris clair = à venir
     d, g, long = 0.1, 0.07, 0.28
@@ -204,6 +205,35 @@ def _transparence(shape, pourcent):
     srgb = shape.fill._xPr.find(".//{http://schemas.openxmlformats.org/drawingml/2006/main}srgbClr")
     alpha = etree.SubElement(srgb, "{http://schemas.openxmlformats.org/drawingml/2006/main}alpha")
     alpha.set("val", str(int((100 - pourcent) * 1000)))
+
+
+def tableau(slide, x, y, largeurs, entetes, rangees, hauteur=0.55, taille=14, colonne_forte=None):
+    """Tableau à la charte : en-tête sur fond gris, cellules blanches, colonne_forte en bleu."""
+    tbl = slide.shapes.add_table(len(rangees) + 1, len(entetes), Inches(x), Inches(y),
+                                 Inches(sum(largeurs)), Inches(hauteur * (len(rangees) + 1))).table
+    for j, lw in enumerate(largeurs):
+        tbl.columns[j].width = Inches(lw)
+    for i in range(len(rangees) + 1):
+        tbl.rows[i].height = Inches(hauteur)
+        for j in range(len(entetes)):
+            cell = tbl.cell(i, j)
+            cell.fill.solid()
+            fort = colonne_forte is not None and j == colonne_forte
+            cell.fill.fore_color.rgb = rgb(BLEU if (fort and i == 0) else (FOND if i == 0 else BLANC))
+            cell.margin_left = cell.margin_right = Inches(0.12)
+            cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+            tf = cell.text_frame
+            tf.word_wrap = True
+            r = tf.paragraphs[0].add_run()
+            r.text = insecables(entetes[j] if i == 0 else rangees[i - 1][j])
+            r.font.name = POLICE
+            r.font.size = Pt(taille)
+            r.font.bold = i == 0 or j == 0 or fort
+            couleur = BLANC if (fort and i == 0) else (NOIR if (i == 0 or j == 0 or fort) else TEXTE_2)
+            r.font.color.rgb = rgb(couleur)
+    tbl._tbl.tblPr.set("firstRow", "0")
+    tbl._tbl.tblPr.set("bandRow", "0")
+    return tbl
 
 
 def barre_mini(slide, x, y, w, valeur, maximum, couleur, h=0.16):
@@ -449,7 +479,163 @@ notes(s, "Jeanne — Variables (40 s). Vos équipes agissent à l'atterrissage :
          "distance et retards. Nous écartons les notes de service, le motif du voyage, déclaré dans l'enquête, et le genre, "
          "qui ne change rien et poserait un risque de discrimination.")
 
-# 9 — Avec ou sans motif (Jeanne) --------------------------------------------
+# 9 — Règle du jeu (Jeanne) -------------------------------------------------
+s = nouvelle()
+titre(s, "Comment nous avons jugé chaque approche", [BLEU, GRIS_CLAIR])
+cw = (W - 2 * M - 0.35) / 2
+# Gauche : le gain en euros
+carte(s, M, 2.0, cw, 4.55)
+icone(s, "euro", M + 0.4, 2.3, 0.6)
+texte(s, M + 1.2, 2.3, cw - 1.6, 0.6, "1. On juge en euros", taille=19, gras=True,
+      ancre=MSO_ANCHOR.MIDDLE)
+texte(s, M + 0.4, 3.1, cw - 0.8, 0.7,
+      "Chaque approche classe les passagers du plus au moins à risque. Les équipes abordent les 10 % en tête de liste.",
+      taille=14, couleur=TEXTE_2)
+for k, (signe, couleur_signe, t1, t2) in enumerate([
+    ("+60 €", VERT, "un vrai mécontent abordé", "1/3 × 1/2 × 600 € de revenu gardé, moins 40 € d'approche"),
+    ("−40 €", ORANGE, "un passager satisfait abordé", "l'approche est dépensée pour rien"),
+]):
+    yy = 4.0 + k * 0.9
+    carte(s, M + 0.4, yy, 1.45, 0.62, couleur_signe, rayon=0.31)
+    texte(s, M + 0.4, yy, 1.45, 0.62, signe, taille=20, gras=True, couleur=NOIR,
+          align=PP_ALIGN.CENTER, ancre=MSO_ANCHOR.MIDDLE)
+    texte(s, M + 2.1, yy - 0.04, cw - 2.5, 0.7, [[(t1, {"gras": True, "taille": 15})], [(t2, {"taille": 12, "couleur": TEXTE_2})]],
+          ancre=MSO_ANCHOR.MIDDLE)
+texte(s, M + 0.4, 5.85, cw - 0.8, 0.5,
+      [[("Rentable dès que ", {}), ("40 %", {"gras": True}), (" des passagers abordés sont mécontents.", {})]],
+      taille=14)
+# Droite : la validation croisée
+x = M + cw + 0.35
+carte(s, x, 2.0, cw, 4.55)
+icone(s, "cible", x + 0.4, 2.3, 0.6)
+texte(s, x + 1.2, 2.3, cw - 1.6, 0.6, "2. Le même examen pour tous", taille=19, gras=True, ancre=MSO_ANCHOR.MIDDLE)
+texte(s, x + 0.4, 3.1, cw - 0.8, 0.7,
+      "Les 103 904 avis sont coupés en 5 parts. On apprend sur 4, on note la 5ᵉ, cinq fois de suite.",
+      taille=14, couleur=TEXTE_2)
+bw, bh, g = 0.62, 0.26, 0.08
+for ligne in range(5):
+    for col in range(5):
+        forme(s, MSO_SHAPE.ROUNDED_RECTANGLE, x + 0.4 + col * (bw + g), 3.95 + ligne * (bh + g), bw, bh,
+              BLEU if col == ligne else GRIS_CLAIR, rayon=0.06)
+xl = x + 0.4 + 5 * (bw + g) + 0.2
+for k, (c, lib) in enumerate([(GRIS_CLAIR, "apprend"), (BLEU, "est noté")]):
+    forme(s, MSO_SHAPE.ROUNDED_RECTANGLE, xl, 4.05 + k * 0.45, 0.3, 0.2, c, rayon=0.05)
+    texte(s, xl + 0.42, 3.98 + k * 0.45, 1.6, 0.34, lib, taille=13, ancre=MSO_ANCHOR.MIDDLE)
+texte(s, x + 0.4, 5.75, cw - 0.8, 0.7,
+      [[("Chaque passager est noté par un modèle qui ne l'a jamais vu. ", {}),
+        ("Le fichier test reste fermé jusqu'à la fin.", {"gras": True})]],
+      taille=14)
+pied(s, "Volet 2 — Prédire · Jeanne · méthode", 9)
+notes(s, "Jeanne — Règle du jeu (50 s). Pour comparer les approches, il faut la même règle du jeu. D'abord, on juge en euros "
+         "avec vos propres chiffres : chaque approche classe les passagers et vos équipes abordent les 10 % en tête. Un vrai "
+         "mécontent abordé rapporte 60 € en moyenne, un passager satisfait abordé coûte 40 €. Ensuite, on fait passer à tous "
+         "le même examen : on coupe les 103 904 avis en 5 parts, on apprend sur 4 et on note la 5e, cinq fois. Chaque passager "
+         "est ainsi noté par un modèle qui ne l'a jamais vu, comme vos passagers du mois prochain. Le fichier test, lui, est "
+         "resté fermé jusqu'à la toute fin.")
+
+# 10 — Cinq approches testées (Jeanne) ----------------------------------------
+s = nouvelle()
+titre(s, "Cinq approches testées, de la plus simple à la plus fine", [BLEU, GRIS_CLAIR])
+carte(s, M, 2.0, W - 2 * M, 4.55)
+approches = [
+    ("Hasard", "on aborde 10 % des passagers sans choisir", 1655, GRIS_CLAIR, ""),
+    ("Règle : plus gros retards", "on aborde les passagers les plus en retard", 2422, GRIS_CLAIR, ""),
+    ("Règle : Eco puis retard", "la meilleure règle qu'un agent peut appliquer seul", 4744, GRIS, ""),
+    ("Régression logistique", "additionne un poids par information", 4551, GRIS_CLAIR, "moins bien que la règle"),
+    ("Gradient boosting", "combine les informations entre elles", 5512, BLEU, "retenu"),
+]
+xb, wb = M + 6.1, 4.6
+for k, (nom, comment, v, c, etiquette) in enumerate(approches):
+    yy = 2.3 + k * 0.78
+    texte(s, M + 0.4, yy, 5.5, 0.7, [[(nom, {"gras": True, "taille": 17})], [(comment, {"taille": 13, "couleur": TEXTE_2})]],
+          ancre=MSO_ANCHOR.MIDDLE)
+    barre_mini(s, xb, yy + 0.24, wb, v, 6000, c, h=0.26)
+    texte(s, xb + wb + 0.15, yy + 0.12, 1.3, 0.5, f"{v:,} €".replace(",", " "), taille=17, gras=True,
+          couleur=BLEU if c == BLEU else NOIR, ancre=MSO_ANCHOR.MIDDLE)
+    if etiquette:
+        fc = NOIR if etiquette == "retenu" else BLANC
+        pil = carte(s, xb + wb - 2.25 if etiquette != "retenu" else xb + wb - 1.15, yy - 0.12,
+                    2.25 if etiquette != "retenu" else 1.15, 0.32, fc, rayon=0.16,
+                    ligne=None if etiquette == "retenu" else GRIS_CLAIR)
+        texte(s, xb + wb - (2.25 if etiquette != "retenu" else 1.15), yy - 0.12, 2.25 if etiquette != "retenu" else 1.15,
+              0.32, etiquette, taille=11, gras=True, couleur=BLANC if etiquette == "retenu" else TEXTE_2,
+              align=PP_ALIGN.CENTER, ancre=MSO_ANCHOR.MIDDLE)
+icone(s, "exclu", M + 0.4, 6.18, 0.32)
+texte(s, M + 0.85, 6.15, W - 2 * M - 1.2, 0.38,
+      [[("Forêt aléatoire aussi testée, puis écartée : ", {"gras": True}),
+        ("résultats différents à chaque exécution, alors que les chiffres doivent être reproductibles.", {})]],
+      taille=13, ancre=MSO_ANCHOR.MIDDLE)
+pied(s, "Volet 2 — Prédire · Jeanne · gain net pour 1 000 passagers, validation croisée sur train, sans motif du voyage", 10)
+notes(s, "Jeanne — Les approches (60 s). Nous sommes partis du plus simple. Au hasard : 1 655 € pour 1 000 passagers. "
+         "Aborder les plus retardés : 2 422 €. La meilleure règle qu'un agent peut appliquer seul, la classe Eco d'abord puis "
+         "les plus retardés : 4 744 €. C'est le score à battre. La régression logistique, le modèle le plus classique, fait "
+         "moins bien que cette règle : elle additionne un poids par information, sans voir les combinaisons. Le gradient "
+         "boosting atteint 5 512 €, soit 768 € de plus que la règle. Nous avons aussi testé une forêt aléatoire, écartée car "
+         "elle ne donnait pas les mêmes chiffres d'une exécution à l'autre.")
+
+# 11 — D'où vient le gradient boosting (Jeanne) -------------------------------
+s = nouvelle()
+titre(s, "Gradient boosting : des petites règles qui se corrigent", [BLEU, GRIS_CLAIR])
+carte(s, M, 2.0, 7.4, 4.55)
+texte(s, M + 0.4, 2.3, 6.6, 0.45, "Comment il décide", taille=19, gras=True)
+etapes = [
+    ("1", "Une première petite règle", "« Classe Eco ? » : elle trie déjà grossièrement les passagers."),
+    ("2", "Une deuxième corrige les erreurs", "« Client peu fidèle ? Retard de plus de 15 min ? »"),
+    ("…", "Et ainsi de suite, une centaine de fois", "chaque règle s'attaque à ce que les précédentes ont raté."),
+    ("=", "Le score de risque", "la somme de tous ces avis : on aborde les 10 % les plus élevés."),
+]
+for k, (num, t1, t2) in enumerate(etapes):
+    yy = 2.95 + k * 0.86
+    forme(s, MSO_SHAPE.OVAL, M + 0.4, yy + 0.06, 0.55, 0.55, BLEU if num == "=" else NOIR)
+    texte(s, M + 0.4, yy + 0.06, 0.55, 0.55, num, taille=18, gras=True, couleur=BLANC,
+          align=PP_ALIGN.CENTER, ancre=MSO_ANCHOR.MIDDLE)
+    texte(s, M + 1.2, yy, 5.9, 0.7, [[(t1, {"gras": True, "taille": 16})], [(t2, {"taille": 13, "couleur": TEXTE_2})]],
+          ancre=MSO_ANCHOR.MIDDLE)
+x = M + 7.75
+carte(s, x, 2.0, W - M - x, 4.55)
+texte(s, x + 0.4, 2.3, 4.0, 0.45, "D'où ça vient", taille=19, gras=True)
+histoire = [
+    ("1990", "Robert Schapire : des règles faibles, combinées, donnent une règle forte (« boosting »)."),
+    ("1995", "Yoav Freund et Robert Schapire : AdaBoost, premier algorithme largement utilisé."),
+    ("2001", "Jerome Friedman (Stanford) : le gradient boosting, chaque règle corrige l'erreur restante."),
+    ("Aujourd'hui", "méthode de référence sur les données en tableau ; nous utilisons la version de scikit-learn."),
+]
+for k, (date, txt) in enumerate(histoire):
+    yy = 2.9 + k * 0.88
+    texte(s, x + 0.4, yy, 4.0, 0.8, [[(date, {"gras": True, "taille": 15, "couleur": BLEU})], [(txt, {"taille": 12, "couleur": TEXTE_2})]])
+pied(s, "Volet 2 — Prédire · Jeanne · HistGradientBoostingClassifier (scikit-learn), une centaine d'arbres de décision", 11)
+notes(s, "Jeanne — Le gradient boosting (60 s). Le principe est simple. Une première petite règle trie grossièrement les "
+         "passagers, par exemple : est-il en classe Eco ? Elle se trompe sur certains. Une deuxième règle se concentre sur ces "
+         "erreurs : est-il peu fidèle, a-t-il eu du retard ? Et ainsi de suite, une centaine de fois. Le score final est la "
+         "somme de tous ces avis. C'est pour ça qu'il fait mieux que la régression logistique : il voit les combinaisons, "
+         "comme « Eco et peu fidèle et en retard ». L'idée vient de Robert Schapire en 1990 : des règles faibles, combinées, "
+         "donnent une règle forte. Jerome Friedman, à Stanford, a formalisé le gradient boosting en 2001. C'est aujourd'hui "
+         "la méthode de référence sur ce type de données.")
+
+# 12 — Pourquoi celui-là (Jeanne) ----------------------------------------------
+s = nouvelle()
+titre(s, "Pourquoi le gradient boosting : quatre critères", [BLEU, NOIR, GRIS_CLAIR])
+carte(s, M, 2.0, W - 2 * M, 4.55)
+tableau(s, M + 0.35, 2.3, [2.6, 2.2, 2.2, 2.1, 2.42],
+        ["Critère", "Règle : Eco puis retard", "Régression logistique", "Forêt aléatoire", "Gradient boosting"],
+        [
+            ["Gain pour 1 000 passagers", "4 744 €", "4 551 €", "moins bon*", "5 512 €"],
+            ["Connu à l'atterrissage", "oui", "oui", "oui", "oui"],
+            ["Mêmes chiffres à chaque fois", "oui", "oui", "non", "oui"],
+            ["Explicable à la direction", "très facile", "oui", "moyen", "oui, par ce qui pèse"],
+            ["Verdict", "référence à battre", "écartée", "écartée", "retenu"],
+        ], hauteur=0.6, taille=14, colonne_forte=4)
+texte(s, M + 0.35, 6.05, W - 2 * M - 0.7, 0.4,
+      "* testée avec le motif du voyage : 5 609 € contre 5 672 € pour le gradient boosting.",
+      taille=12, couleur=GRIS)
+pied(s, "Volet 2 — Prédire · Jeanne · validation croisée sur train, sans motif du voyage", 12)
+notes(s, "Jeanne — Le choix (50 s). Nous n'avons pas choisi seulement sur le score. Quatre critères : ce que ça rapporte, "
+         "le fait de n'utiliser que des informations connues à l'atterrissage, la reproductibilité, et la possibilité de vous "
+         "l'expliquer. La règle simple est la plus facile à expliquer, mais elle rapporte 768 € de moins pour 1 000 passagers. "
+         "La régression logistique fait moins bien que la règle. La forêt aléatoire ne donne pas deux fois le même résultat. "
+         "Le gradient boosting coche les quatre cases, et je vais vous montrer sur quoi il se base.")
+
+# 13 — Avec ou sans motif (Jeanne) --------------------------------------------
 s = nouvelle()
 titre(s, "Sans le motif du voyage, un modèle devient utile", [BLEU, GRIS_CLAIR])
 cw = (W - 2 * M - 0.35) / 2
@@ -481,7 +667,42 @@ notes(s, "Jeanne — Pourquoi un modèle (50 s). Le motif du voyage prédit trè
          "connaît pas pour les passagers qui n'ont pas répondu. Sans lui, la meilleure règle tombe à 4 744 €, et notre modèle "
          "rapporte 768 € de plus pour 1 000 passagers. C'est là qu'il se justifie.")
 
-# 10 — 94 sur 100 (Jeanne) ---------------------------------------------------
+# 14 — Ce qui guide le modèle (Jeanne) ----------------------------------------
+s = nouvelle()
+titre(s, "Ce qui guide le modèle, et qui il désigne", [BLEU, ORANGE, GRIS_CLAIR])
+carte(s, M, 2.0, 6.0, 4.55)
+texte(s, M + 0.4, 2.3, 5.2, 0.45, "Ce qui pèse dans sa décision", taille=19, gras=True)
+poids = [("Classe du billet", 0.216), ("Âge", 0.064), ("Fidélité", 0.064),
+         ("Retard à l'arrivée", 0.017), ("Distance du vol", 0.009), ("Retard au départ", 0.001)]
+for k, (lib, v) in enumerate(poids):
+    yy = 2.9 + k * 0.5
+    texte(s, M + 0.4, yy, 2.2, 0.36, lib, taille=14, gras=k == 0, ancre=MSO_ANCHOR.MIDDLE)
+    barre_mini(s, M + 2.65, yy + 0.1, 2.95, v, 0.22, BLEU if k == 0 else (NOIR if v > 0.05 else GRIS_CLAIR), h=0.16)
+texte(s, M + 0.4, 5.95, 5.2, 0.5,
+      "On brouille une information à la fois : plus le modèle se trompe ensuite, plus elle comptait.",
+      taille=12, couleur=TEXTE_2)
+x = M + 6.35
+carte(s, x, 2.0, W - M - x, 4.55)
+texte(s, x + 0.4, 2.3, 5.0, 0.45, "Le portrait des passagers signalés", taille=19, gras=True)
+texte(s, x + 3.15, 2.85, 1.0, 0.3, "Signalés", taille=12, gras=True, align=PP_ALIGN.RIGHT)
+texte(s, x + 4.25, 2.85, 1.0, 0.3, "Tous", taille=12, couleur=GRIS, align=PP_ALIGN.RIGHT)
+portrait = [("En classe Eco", "80 %", "45 %"), ("Peu fidèles", "61 %", "18 %"), ("Âge médian", "33 ans", "40 ans"),
+            ("Retard médian", "13 min", "0 min"), ("Vraiment mécontents", "95 %", "57 %")]
+for k, (lib, a, b) in enumerate(portrait):
+    yy = 3.25 + k * 0.55
+    texte(s, x + 0.4, yy, 2.7, 0.4, lib, taille=15, ancre=MSO_ANCHOR.MIDDLE)
+    texte(s, x + 3.05, yy, 1.1, 0.4, a, taille=17, gras=True, couleur=BLEU, align=PP_ALIGN.RIGHT, ancre=MSO_ANCHOR.MIDDLE)
+    texte(s, x + 4.25, yy, 1.0, 0.4, b, taille=15, couleur=GRIS, align=PP_ALIGN.RIGHT, ancre=MSO_ANCHOR.MIDDLE)
+texte(s, x + 0.4, 6.05, 5.0, 0.4, "En une phrase : des passagers en Eco, peu fidèles, plutôt jeunes, un peu retardés.",
+      taille=12, gras=True)
+pied(s, "Volet 2 — Prédire · Jeanne · importance par permutation et portrait des 10 % signalés, train", 14)
+notes(s, "Jeanne — Ce qui guide le modèle (50 s). Pour savoir sur quoi il se base, on brouille une information à la fois "
+         "et on regarde combien il se trompe ensuite. La classe du billet compte de loin le plus, puis l'âge et la fidélité ; "
+         "les retards et la distance comptent peu. Résultat : il désigne surtout des passagers en Eco, 80 % contre 45 % en "
+         "moyenne, peu fidèles, plutôt jeunes et un peu retardés. Et 95 % d'entre eux sont vraiment mécontents. "
+         "Vous pouvez l'expliquer en une phrase à votre comité.")
+
+# 15 — 94 sur 100 (Jeanne) ---------------------------------------------------
 s = nouvelle()
 titre(s, "Sur 100 passagers abordés, 94 sont vraiment mécontents", [BLEU, ORANGE])
 carte(s, M, 2.0, 6.9, 4.55)
